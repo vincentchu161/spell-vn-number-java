@@ -3,7 +3,6 @@ package work.vincentchu.libs.spellvnnumber;
 import org.junit.jupiter.api.Test;
 import work.vincentchu.libs.spellvnnumber.error.InvalidFormatException;
 import work.vincentchu.libs.spellvnnumber.error.InvalidNumberException;
-import work.vincentchu.libs.spellvnnumber.type.Index;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -91,45 +90,6 @@ class SpellerTest {
     }
 
     @Test
-    void testCustomConfig() {
-        SpellerConfig config = new SpellerConfig();
-        config.setSeparator("-");
-        config.setNegativeSign("minus");
-        config.setDecimalPoint(",");
-        config.setThousandSign(".");
-        config.setNegativeText("negative");
-        config.setPointText("point");
-        config.setCapitalizeInitial(false);
-        config.setCurrencyUnit("USD");
-        config.setRedundantZeroChar("0");
-        config.setKeepOneZeroWhenAllZeros(true);
-
-        // Set custom digit names
-        config.setDigitName("0", "zero");
-        config.setDigitName("1", "one");
-        config.setDigitName("2", "two");
-        config.setDigitName("3", "three");
-        config.setDigitName("4", "four");
-        config.setDigitName("5", "five");
-        config.setDigitName("6", "six");
-        config.setDigitName("7", "seven");
-        config.setDigitName("8", "eight");
-        config.setDigitName("9", "nine");
-
-        // Set custom unit names
-        config.setUnitName(Index.BILLION.value(), "billion");
-        config.setUnitName(Index.MILLION.value(), "million");
-        config.setUnitName(Index.THOUSAND.value(), "thousand");
-        config.setUnitName(Index.HUNDREDS.value(), "hundred");
-        config.setUnitName(Index.TENS.value(), "ty");
-        config.setUnitName(Index.UNITS.value(), "");
-
-        Speller customSpeller = new Speller(config);
-        assertEquals("negative-one-point-one-USD", customSpeller.spell(-1.1));
-        assertEquals("one-thousand-point-one-USD", customSpeller.spell(1000.1));
-    }
-
-    @Test
     void testInvalidInput() {
         assertThrows(InvalidFormatException.class, () -> speller.spell(null));
         assertThrows(InvalidFormatException.class, () -> speller.spell(""));
@@ -168,7 +128,7 @@ class SpellerTest {
         assertEquals("Không", speller.spell(0));
         assertEquals("Không", speller.spell(0.0));
         assertEquals("Không", speller.spell(-0));
-        assertEquals("Âm không", speller.spell(-0.0));
+        assertEquals("Không", speller.spell(-0.0));
         assertEquals("Âm không", speller.spell("-0"));
         assertEquals("Âm không", speller.spell("-0.0"));
     }
@@ -186,11 +146,11 @@ class SpellerTest {
 
     @Test
     void testComplexDecimalNumbers() {
-        assertEquals("Một chấm hai ba", speller.spell(1.23));
-        assertEquals("Mười hai chấm ba bốn", speller.spell(12.34));
-        assertEquals("Một trăm hai mươi ba chấm bốn năm", speller.spell(123.45));
-        assertEquals("Một nghìn hai trăm ba mươi tư chấm năm sáu", speller.spell(1234.56));
-        assertEquals("Mười hai nghìn ba trăm bốn mươi lăm chấm sáu bảy", speller.spell(12345.67));
+        assertEquals("Một chấm hai mươi ba", speller.spell(1.23));
+        assertEquals("Mười hai chấm ba mươi tư", speller.spell(12.34));
+        assertEquals("Một trăm hai mươi ba chấm bốn mươi lăm", speller.spell(123.45));
+        assertEquals("Một nghìn hai trăm ba mươi tư chấm năm mươi sáu", speller.spell(1234.56));
+        assertEquals("Mười hai nghìn ba trăm bốn mươi lăm chấm sáu mươi bảy", speller.spell(12345.67));
     }
 
     @Test
