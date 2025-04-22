@@ -67,6 +67,8 @@
                     <!-- serverId fit <id> trong settings.xml -->
                     <publishingServerId>central</publishingServerId>
                     <!-- optional: stagingDirectory, waitForPublishCompletion, ... -->
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
                 </configuration>
             </plugin>
             <plugin>
